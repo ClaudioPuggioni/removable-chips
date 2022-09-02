@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Removable Chips</title>
+  </head>
+  <body>
+    <div id="container">
+      <div id="card">
+        <div id="inputDiv">
+          <input id="nameInput" onkeydown="addAvatar(event)" name="nameInput" type="text" />
+          <button id="addBtn" onclick="addAvatar(event)">Add</button>
+        </div>
+        <div id="namesDiv">
+          <img src="" alt="" srcset="" />
+        </div>
+      </div>
+    </div>
+    <script>
+      const addBtnEl = document.querySelector("#addBtn");
+      const nameInputEl = document.querySelector("#nameInput");
+      const namesDivEl = document.querySelector("#namesDiv");
+
+      function addAvatar(e) {
+        if (e.target === addBtnEl || (e.target === nameInputEl && e.key === "Enter")) {
+          e.preventDefault();
+          addBtnEl.setAttribute("disabled", "disabled");
+          let tempDiv = document.createElement("div");
+          let tempImg = document.createElement("img");
+          let tempTxt = document.createElement("div");
+          let tempBtn = document.createElement("button");
+
+          tempDiv.classList.add("chipDiv");
+          tempImg.classList.add("chipImg");
+          tempTxt.classList.add("chipTxt");
+          tempBtn.classList.add("chipBtn");
+
+          tempImg.src = "./avatar.png";
+          tempTxt.innerText = nameInputEl.value;
+          tempBtn.innerText = "x";
+
+          tempBtn.addEventListener("click", () => {
+            e.preventDefault();
+            tempDiv.remove();
+          });
+
+          tempDiv.appendChild(tempImg);
+          tempDiv.appendChild(tempTxt);
+          tempDiv.appendChild(tempBtn);
+          namesDivEl.appendChild(tempDiv);
+          nameInputEl.value = "";
+          addBtnEl.removeAttribute("disabled");
+        }
+      }
+    </script>
+  </body>
+</html>
